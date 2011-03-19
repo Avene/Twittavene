@@ -4,6 +4,6 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry kind="lib" path="D:/Java_Libraries/twitter4j-2.1.9-SNAPSHOT/lib/twitter4j-core-2.1.9-SNAPSHOT.jar" sourcepath="D:/Java_Libraries/twitter4j-2.1.9-SNAPSHOT/twitter4j-core/twitter4j-core-2.1.9-SNAPSHOT-sources.jar"/>
+	<classpathentry kind="lib" path="twitter4j-core-2.1.9-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

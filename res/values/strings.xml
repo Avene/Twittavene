@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Twittavene</string>
+	<string name="no_statuses">No Statuses Yet</string>
+	<string name="button_scroll_to_latest">Latest</string>
+	<string name="button_stop">Stop TL</string>
+	<string name="button_clear">Clear TL</string>
+	<string name="button_rotate">Rotate</string>
+	<string name="button_layout">Change Layout</string>
+	<string name="button_post">POST</string>
+
+	<string name="post_label">What are you doing?</string>
+	<string name="post_title">Enter your status</string>
+
+	<string name="user_view_followees_label">followings:</string>
+	<string name="user_view_followers_label">followers:</string>
+	<string name="user_view_bio_label">bio:</string>
+
+	<string name="status_view_in_reply_to_header">This tweet is in reply to ↓</string>
+	<string name="status_view_reply_label">/@</string>
+	<string name="status_view_user_detail_label">user prof.</string>
+	<string name="status_view_QT_label">Quote</string>
+
+	<string name="message_loading">loading...</string>
+	<string-array name="massage_list_loading">
+		<item>
+		<string>loading.</string>
+		<string>loading..</string>
+		<string>loading...</string>
+		</item>
+	</string-array>
+</resources>

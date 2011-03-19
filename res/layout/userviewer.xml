@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+>
+	<RelativeLayout
+		android:id="@+id/user_info_layout"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+	>
+
+		<ImageView
+			android:id="@+id/user_view_icon"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:focusableInTouchMode="true"
+			android:focusable="true"
+			android:maxWidth="72px"
+			android:maxHeight="72px"
+			android:padding="10px" />
+
+		<LinearLayout
+			android:id="@+id/user_view_user_names"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:layout_width="wrap_content"
+			android:layout_centerInParent="true"
+			android:layout_alignBaseline="@id/user_view_icon"
+		>
+
+			<TextView
+				android:id="@+id/user_view_screen_NAME"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:focusable="true"
+				android:textSize="18px"
+				android:textColor="#557799"
+				android:padding="4px"
+				android:text="@string/message_loading" />
+			<TextView
+				android:id="@+id/user_view_name"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textSize="18px"
+				android:textColor="#99ccaa"
+				android:padding="4px"
+				android:text="@string/message_loading" />
+		</LinearLayout>
+
+		<LinearLayout
+			android:id="@+id/user_view_following_info"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:layout_alignParentRight="false"
+			android:layout_toRightOf="@id/user_view_user_names"
+		>
+			<Button
+				android:id="@+id/user_view_followers"
+				android:text="@string/user_view_followers_label"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:singleLine="false"
+				android:background="@drawable/button"
+				android:textColor="#dddddd"
+				android:gravity="right" />
+			<Button
+				android:id="@+id/user_view_followings"
+				android:text="@string/user_view_followees_label"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:singleLine="false"
+				android:background="@drawable/button"
+				android:textColor="#dddddd"
+				android:gravity="right" />
+
+		</LinearLayout>
+	</RelativeLayout>
+
+	<RelativeLayout
+		android:id="@+id/user_bio_layout"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+	>
+		<TextView
+			android:id="@+id/user_bio_label"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/user_view_bio_label"
+			android:layout_alignParentLeft="true" />
+
+		<TextView
+			android:id="@+id/user_view_bio"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/user_bio_label"
+			android:text="@string/message_loading" />
+	</RelativeLayout>
+
+	<ListView
+		android:id="@+id/user_view_statuses"
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:entries="@array/massage_list_loading"
+	>
+	</ListView>
+	<TextView
+		android:id="@+id/user_view_status"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" />
+
+</LinearLayout>

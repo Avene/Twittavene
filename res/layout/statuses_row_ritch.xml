@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+>
+
+	<ImageView
+		android:id="@+id/status_icon"
+		android:src="@drawable/icon"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_width="wrap_content"
+		android:layout_alignTop="@+id/status_name"
+		android:layout_alignBottom="@+id/status_body"
+		/>
+
+
+	<TextView
+		android:id="@+id/status_name"
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textColor="#99ccaa"
+		android:text="@string/message_loading"
+		android:padding="1dp"
+		android:layout_toRightOf="@id/status_icon" />
+
+	<TextView
+		android:id="@+id/status_screen_name"
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textColor="#557799"
+		android:text="@string/message_loading"
+		android:padding="1dp"
+		android:layout_toRightOf="@id/status_name" />
+
+	<TextView
+		android:id="@+id/status_created_at"
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textColor="#66ffffff"
+		android:text="@string/message_loading"
+		android:layout_alignParentRight="true"
+		android:padding="1dp"
+		android:textSize="12dp" />
+
+	<TextView
+		android:id="@+id/status_body"
+		android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:padding="1dp"
+		android:linksClickable="true"
+		android:autoLink="map|web"
+		android:layout_below="@id/status_name"
+		android:layout_toRightOf="@id/status_icon" />
+		
+
+</RelativeLayout>

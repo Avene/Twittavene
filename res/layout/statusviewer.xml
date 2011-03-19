@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+>
+	<ImageView
+		android:id="@+id/status_view_icon"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:maxWidth="72px"
+		android:maxHeight="72px"
+		android:padding="10px"
+	></ImageView>
+
+
+	<Button
+		android:id="@+id/status_view_reply_button"
+		android:text="@string/status_view_reply_label"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentTop="true"
+		android:layout_alignParentRight="true"
+	></Button>
+
+	<Button
+		android:id="@+id/status_view_user_detail_button"
+		android:layout_below="@id/status_view_reply_button"
+		android:text="@string/status_view_user_detail_label"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+	></Button>
+
+	<Button
+		android:id="@+id/status_view_quote_button"
+		android:layout_below="@id/status_view_user_detail_button"
+		android:text="@string/status_view_QT_label"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+	></Button>
+	<TextView
+		android:id="@+id/status_view_name"
+		android:text="@+id/status_view_name"
+		android:layout_width="wrap_content"
+		android:layout_toRightOf="@id/status_view_icon"
+		android:layout_height="wrap_content"
+		android:layout_alignTop="@+id/status_view_icon"
+	></TextView>
+
+	<TextView
+		android:id="@+id/status_view_screen_name"
+		android:text="@+id/status_view_screen_name"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/status_view_name"
+		android:layout_alignLeft="@id/status_view_name"
+	></TextView>
+
+	<TextView
+		android:id="@+id/status_view_created_at"
+		android:text="@+id/status_view_created_at"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/status_view_screen_name"
+		android:layout_alignLeft="@id/status_view_screen_name"
+	></TextView>
+
+	<TextView
+		android:id="@+id/status_view_text"
+		android:layout_below="@id/status_view_created_at"
+		android:layout_centerHorizontal="true"
+		android:layout_toLeftOf="@id/status_view_user_detail_button"
+		android:text="@+id/status_view_text"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+	></TextView>
+
+	<TextView
+		android:id="@+id/status_view_in_reply_to_header"
+		android:layout_below="@id/status_view_text"
+		android:layout_alignParentLeft="true"
+		android:text="@string/status_view_in_reply_to_header"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:visibility="invisible"
+	></TextView>
+
+	<ListView
+		android:id="@+id/status_view_in_reply_to_chain"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/status_view_in_reply_to_header"
+		android:layout_alignParentRight="true"
+		android:entries="@array/massage_list_loading"
+		android:visibility="invisible"
+	></ListView>
+
+
+
+
+</RelativeLayout>

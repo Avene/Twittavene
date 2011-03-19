@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+	xmlns:android="http://schemas.android.com/apk/res/android"
+>
+	<item
+		android:id="@+id/options_menu_scroll_to_latest"
+		android:title="@string/button_scroll_to_latest"
+		android:orderInCategory="0" />
+	<item
+		android:id="@+id/stop"
+		android:title="@string/button_stop"
+		android:orderInCategory="1" />
+	<item
+		android:id="@+id/clear"
+		android:title="@string/button_clear"
+		android:orderInCategory="2" />
+	<item
+		android:id="@+id/rotate"
+		android:title="@string/button_rotate"
+		android:orderInCategory="3" />
+	<item
+		android:id="@+id/change_layout"
+		android:title="@string/button_layout"
+		android:orderInCategory="4" />
+	<item
+		android:id="@+id/post"
+		android:title="@string/button_post"
+		android:orderInCategory="5" />
+</menu>

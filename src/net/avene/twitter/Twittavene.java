@@ -17,8 +17,8 @@ import twitter4j.Status;
 import twitter4j.TwitterAdapter;
 import twitter4j.TwitterException;
 import twitter4j.User;
-import twitter4j.http.AccessToken;
-import twitter4j.http.RequestToken;
+import twitter4j.auth.AccessToken;
+import twitter4j.auth.RequestToken;
 import android.app.ListActivity;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -39,7 +39,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 public class Twittavene extends ListActivity {
@@ -165,7 +164,7 @@ public class Twittavene extends ListActivity {
 		}
 
 		try {
-			if (!mAsyncTwitter.isOAuthEnabled()) {
+			if (!mAsyncTwitter.getAuthorization().isEnabled()) {
 				RequestToken requestToken = mAsyncTwitter
 						.getOAuthRequestToken();
 				AccessToken accessToken = null;
@@ -214,7 +213,7 @@ public class Twittavene extends ListActivity {
 			this.scrollToLatest();
 			break;
 		case 1: // option: stop
-			
+
 			this.mAsyncTwitter.showUser(screenName);
 			break;
 		case 2: // option: clear
@@ -272,19 +271,21 @@ public class Twittavene extends ListActivity {
 
 	private void prepareCursor() {
 
-//		String[] from = new String[] { StatusDbAdapter.KEY_NAME,
-//				StatusDbAdapter.KEY_SCREEN_NAME, StatusDbAdapter.KEY_TEXT,
-//				StatusDbAdapter.KEY_CREATED_AT, StatusDbAdapter.KEY_PROFILE_IMAGE_URL};
-//		int[] to = new int[] { R.id.status_name, R.id.status_screen_name,
-//				R.id.status_body, R.id.status_created_at };
+		// String[] from = new String[] { StatusDbAdapter.KEY_NAME,
+		// StatusDbAdapter.KEY_SCREEN_NAME, StatusDbAdapter.KEY_TEXT,
+		// StatusDbAdapter.KEY_CREATED_AT,
+		// StatusDbAdapter.KEY_PROFILE_IMAGE_URL};
+		// int[] to = new int[] { R.id.status_name, R.id.status_screen_name,
+		// R.id.status_body, R.id.status_created_at };
 
 		cursor = mDbHelper.fetchAllStatuses();
 		startManagingCursor(cursor);
-//
-//		SimpleCursorAdapter notes = new SimpleCursorAdapter(this,
-//				mStatusLayoutId, cursor, from, to);
-//		this.setListAdapter(notes);
-		this.setListAdapter(new StatusCursorAdapter(this, cursor, mStatusLayoutId));
+		//
+		// SimpleCursorAdapter notes = new SimpleCursorAdapter(this,
+		// mStatusLayoutId, cursor, from, to);
+		// this.setListAdapter(notes);
+		this.setListAdapter(new StatusCursorAdapter(this, cursor,
+				mStatusLayoutId));
 
 	}
 
@@ -327,7 +328,7 @@ public class Twittavene extends ListActivity {
 		listView.setSelection(listView.getCount());
 	}
 
-	private void storeAccessToken(int useId, AccessToken accessToken) {
+	private void storeAccessToken(long useId, AccessToken accessToken) {
 		Properties twitter4jProperties = new Properties();
 		try {
 			twitter4jProperties.load(new FileInputStream(TWITTER4J_PROPERTIES));

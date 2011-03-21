@@ -15,8 +15,8 @@ import twitter4j.TwitterStreamFactory;
 import twitter4j.UserStream;
 import twitter4j.UserStreamAdapter;
 import twitter4j.UserStreamListener;
-import twitter4j.auth.AccessToken;
-import twitter4j.auth.RequestToken;
+import twitter4j.http.AccessToken;
+import twitter4j.http.RequestToken;
 
 public class UserStreamReader {
 	private static final String TWITTER4J_PROPERTIES = "twitter4j.properties";
@@ -29,7 +29,7 @@ public class UserStreamReader {
 		// このファクトリインスタンスは再利用可能でスレッドセーフです
 		Twitter twitter = new TwitterFactory().getInstance();
 		// twitter.setOAuthConsumer("[consumer key]", "[consumer secret]");
-		if (!twitter.getAuthorization().isEnabled()) {
+		if (!twitter.isOAuthEnabled()) {
 			RequestToken requestToken = twitter.getOAuthRequestToken();
 			AccessToken accessToken = null;
 			BufferedReader br = new BufferedReader(new InputStreamReader(
@@ -79,7 +79,7 @@ public class UserStreamReader {
 		}
 	}
 
-	private static void storeAccessToken(long useId, AccessToken accessToken) {
+	private static void storeAccessToken(int useId, AccessToken accessToken) {
 		Properties twitter4jProperties = new Properties();
 		try {
 			twitter4jProperties.load(new FileInputStream(TWITTER4J_PROPERTIES));

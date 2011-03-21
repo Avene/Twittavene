@@ -7,8 +7,8 @@ import java.io.InputStreamReader;
 import twitter4j.AsyncTwitter;
 import twitter4j.AsyncTwitterFactory;
 import twitter4j.TwitterException;
-import twitter4j.auth.AccessToken;
-import twitter4j.auth.RequestToken;
+import twitter4j.http.AccessToken;
+import twitter4j.http.RequestToken;
 
 public class A {
 
@@ -52,7 +52,7 @@ public class A {
 
 	private void connect() {
 		try {
-			if (!mAsyncTwitter.getAuthorization().isEnabled()) {
+			if (!mAsyncTwitter.isOAuthEnabled()) {
 				RequestToken requestToken = mAsyncTwitter
 						.getOAuthRequestToken();
 				AccessToken accessToken = null;

@@ -15,8 +15,8 @@ import twitter4j.Status;
 import twitter4j.TwitterAdapter;
 import twitter4j.TwitterException;
 import twitter4j.User;
-import twitter4j.auth.AccessToken;
-import twitter4j.auth.RequestToken;
+import twitter4j.http.AccessToken;
+import twitter4j.http.RequestToken;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
@@ -97,7 +97,7 @@ public class TwitterService extends Service {
 		}
 
 		try {
-			if (!mAsyncTwitter.getAuthorization().isEnabled()) {
+			if (!mAsyncTwitter.isOAuthEnabled()) {
 				RequestToken requestToken = mAsyncTwitter
 						.getOAuthRequestToken();
 				AccessToken accessToken = null;
@@ -132,7 +132,7 @@ public class TwitterService extends Service {
 		}
 	}
 
-	private void storeAccessToken(long useId, AccessToken accessToken) {
+	private void storeAccessToken(int useId, AccessToken accessToken) {
 		Properties twitter4jProperties = new Properties();
 		try {
 			twitter4jProperties.load(new FileInputStream(

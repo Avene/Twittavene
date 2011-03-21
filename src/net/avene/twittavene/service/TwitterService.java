@@ -12,11 +12,12 @@ import twitter4j.AsyncTwitter;
 import twitter4j.AsyncTwitterFactory;
 import twitter4j.ResponseList;
 import twitter4j.Status;
+import twitter4j.StatusUpdate;
 import twitter4j.TwitterAdapter;
 import twitter4j.TwitterException;
 import twitter4j.User;
-import twitter4j.http.AccessToken;
-import twitter4j.http.RequestToken;
+import twitter4j.auth.AccessToken;
+import twitter4j.auth.RequestToken;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
@@ -51,17 +52,19 @@ public class TwitterService extends Service {
 	}
 
 	public void updateStatus(String status, Long inReplyToStatusId) {
-		mAsyncTwitter.updateStatus(status, inReplyToStatusId);
+		StatusUpdate statusUpdate = new StatusUpdate(status);
+		statusUpdate.setInReplyToStatusId(inReplyToStatusId);
+		mAsyncTwitter.updateStatus(statusUpdate);
 	}
 
-	public void updateStatus(Intent intent, String status) {
-		mAsyncTwitter
-				.updateStatus(
-						String.valueOf(
-								intent.getCharSequenceExtra(Twittavene.KEY_STATUS_BODY))
-								.trim(), Long.valueOf(intent.getLongExtra(
-								(Twittavene.KEY_IN_REPLY_TO_STATUS_ID), -1)));
-	}
+//	public void updateStatus(Intent intent, String status) {
+//		mAsyncTwitter
+//				.updateStatus(
+//						String.valueOf(
+//								intent.getCharSequenceExtra(Twittavene.KEY_STATUS_BODY))
+//								.trim(), Long.valueOf(intent.getLongExtra(
+//								(Twittavene.KEY_IN_REPLY_TO_STATUS_ID), -1)));
+//	}
 
 	public void getUserTimeline(int userId) {
 		mAsyncTwitter.getUserTimeline(userId);
@@ -73,7 +76,8 @@ public class TwitterService extends Service {
 
 	private void constructTwitterConnection() {
 		if (mAsyncTwitter == null) {
-			mAsyncTwitter = new AsyncTwitterFactory(new TwitterAdapter() {
+			mAsyncTwitter = new AsyncTwitterFactory().getInstance();
+			mAsyncTwitter.addListener(new TwitterAdapter() {
 				@Override
 				public void gotHomeTimeline(ResponseList<Status> statuses) {
 					super.gotHomeTimeline(statuses);
@@ -93,11 +97,11 @@ public class TwitterService extends Service {
 					super.gotShowStatus(status);
 					// openStatusViewer(status);
 				}
-			}).getInstance();
+			});
 		}
 
 		try {
-			if (!mAsyncTwitter.isOAuthEnabled()) {
+			if (!mAsyncTwitter.getAuthorization().isEnabled()) {
 				RequestToken requestToken = mAsyncTwitter
 						.getOAuthRequestToken();
 				AccessToken accessToken = null;
@@ -132,7 +136,7 @@ public class TwitterService extends Service {
 		}
 	}
 
-	private void storeAccessToken(int useId, AccessToken accessToken) {
+	private void storeAccessToken(long useId, AccessToken accessToken) {
 		Properties twitter4jProperties = new Properties();
 		try {
 			twitter4jProperties.load(new FileInputStream(

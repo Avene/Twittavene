@@ -17,8 +17,8 @@ import twitter4j.Status;
 import twitter4j.TwitterAdapter;
 import twitter4j.TwitterException;
 import twitter4j.User;
-import twitter4j.http.AccessToken;
-import twitter4j.http.RequestToken;
+import twitter4j.auth.AccessToken;
+import twitter4j.auth.RequestToken;
 import android.app.ListActivity;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -39,7 +39,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 public class Twittavene extends ListActivity {
@@ -141,7 +140,8 @@ public class Twittavene extends ListActivity {
 		if (getLastNonConfigurationInstance() instanceof AsyncTwitter) {
 			mAsyncTwitter = (AsyncTwitter) getLastNonConfigurationInstance();
 		} else {
-			mAsyncTwitter = new AsyncTwitterFactory(new TwitterAdapter() {
+			mAsyncTwitter = new AsyncTwitterFactory().getInstance();
+			mAsyncTwitter.addListener(new TwitterAdapter() {
 				@Override
 				public void gotHomeTimeline(ResponseList<Status> statuses) {
 					super.gotHomeTimeline(statuses);
@@ -161,11 +161,11 @@ public class Twittavene extends ListActivity {
 					super.gotShowStatus(status);
 					openStatusViewer(status);
 				}
-			}).getInstance();
+			});
 		}
 
 		try {
-			if (!mAsyncTwitter.isOAuthEnabled()) {
+			if (!mAsyncTwitter.getAuthorization().isEnabled()) {
 				RequestToken requestToken = mAsyncTwitter
 						.getOAuthRequestToken();
 				AccessToken accessToken = null;
@@ -327,7 +327,7 @@ public class Twittavene extends ListActivity {
 		listView.setSelection(listView.getCount());
 	}
 
-	private void storeAccessToken(int useId, AccessToken accessToken) {
+	private void storeAccessToken(long useId, AccessToken accessToken) {
 		Properties twitter4jProperties = new Properties();
 		try {
 			twitter4jProperties.load(new FileInputStream(TWITTER4J_PROPERTIES));

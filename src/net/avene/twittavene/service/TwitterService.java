@@ -122,7 +122,8 @@ public class TwitterService extends Service {
 					}
 				}
 				// save AccessToken into External Resource
-				storeAccessToken(mAsyncTwitter.getId(), accessToken);
+				storeAccessToken(mAsyncTwitter
+						.getId(), accessToken);
 
 			}
 		} catch (TwitterException te) {

@@ -9,11 +9,8 @@ import net.avene.sqlite.ProfileImageDbAdapter;
 import net.avene.sqlite.StatusDbAdapter;
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources;
 import android.database.Cursor;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.DrawableContainer;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -44,39 +41,39 @@ public class StatusCursorAdapter extends CursorAdapter {
 	public View newView(Context context, Cursor cursor, ViewGroup parent) {
 		View convertView = ((Activity) context).getLayoutInflater().inflate(
 				R.layout.statuses_row_ritch, parent, false);
-//		StatusViewHolder holder = new StatusViewHolder(convertView);
-//		convertView.setTag(holder);
-//
-//		holder.getName().setText(
-//				cursor.getString(cursor
-//						.getColumnIndex(StatusDbAdapter.KEY_NAME)));
-//		holder.getScreenName().setText(
-//				cursor.getString(cursor
-//						.getColumnIndex(StatusDbAdapter.KEY_SCREEN_NAME)));
-//		holder.getCreatedAt().setText(
-//				cursor.getString(cursor
-//						.getColumnIndex(StatusDbAdapter.KEY_CREATED_AT)));
-//		holder.getBody().setText(
-//				cursor.getString(cursor
-//						.getColumnIndex(StatusDbAdapter.KEY_TEXT)));
-//		ProfileImageDbAdapter imageDbAdapter = ProfileImageDbAdapter
-//				.getInstance();
-////		imageDbAdapter.open();
-//		try {
-//			holder.getIcon()
-//					.setImageDrawable(
-//							imageDbAdapter.fetchProfileImage(context, 
-//									cursor.getLong(cursor
-//											.getColumnIndex(StatusDbAdapter.KEY_ID)),
-//									new URL(
-//											cursor.getString(cursor
-//													.getColumnIndex(StatusDbAdapter.KEY_PROFILE_IMAGE_URL)))));
-//		} catch (MalformedURLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} finally {
-////			imageDbAdapter.close();
-//		}
+		// StatusViewHolder holder = new StatusViewHolder(convertView);
+		// convertView.setTag(holder);
+		//
+		// holder.getName().setText(
+		// cursor.getString(cursor
+		// .getColumnIndex(StatusDbAdapter.KEY_NAME)));
+		// holder.getScreenName().setText(
+		// cursor.getString(cursor
+		// .getColumnIndex(StatusDbAdapter.KEY_SCREEN_NAME)));
+		// holder.getCreatedAt().setText(
+		// cursor.getString(cursor
+		// .getColumnIndex(StatusDbAdapter.KEY_CREATED_AT)));
+		// holder.getBody().setText(
+		// cursor.getString(cursor
+		// .getColumnIndex(StatusDbAdapter.KEY_TEXT)));
+		// ProfileImageDbAdapter imageDbAdapter = ProfileImageDbAdapter
+		// .getInstance();
+		// // imageDbAdapter.open();
+		// try {
+		// holder.getIcon()
+		// .setImageDrawable(
+		// imageDbAdapter.fetchProfileImage(context,
+		// cursor.getLong(cursor
+		// .getColumnIndex(StatusDbAdapter.KEY_ID)),
+		// new URL(
+		// cursor.getString(cursor
+		// .getColumnIndex(StatusDbAdapter.KEY_PROFILE_IMAGE_URL)))));
+		// } catch (MalformedURLException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// } finally {
+		// // imageDbAdapter.close();
+		// }
 		this.createView(context, convertView, cursor);
 		return convertView;
 	}
@@ -97,28 +94,35 @@ public class StatusCursorAdapter extends CursorAdapter {
 		holder.getBody().setText(
 				cursor.getString(cursor
 						.getColumnIndex(StatusDbAdapter.KEY_TEXT)));
-//		long userId = cursor.getLong(cursor
-//				.getColumnIndex(StatusDbAdapter.KEY_ID));
-//		if (mProfileImageMap.containsKey(userId)) {
-//			Log.d("ImageGetTask",
-//					"icon found in internal map: "
-//							+ cursor.getString(cursor
-//									.getColumnIndex(StatusDbAdapter.KEY_SCREEN_NAME)));
-//			holder.getIcon().setImageDrawable(mProfileImageMap.get(userId));
-//			return view;
-//		} else {
-//			holder.getIcon().setImageDrawable(
-//					Drawable.createFromPath("res/drawable-mdpi/icon.png"));
-//			try {
-//				URL profileImageURL = new URL(cursor.getString(cursor
-//						.getColumnIndex(StatusDbAdapter.KEY_PROFILE_IMAGE_URL)));
-//				new ProfileImageGetTask().execute(context, userId,
-//						profileImageURL, view);
-//			} catch (MalformedURLException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
+		long userId = cursor.getLong(cursor
+				.getColumnIndex(StatusDbAdapter.KEY_ID));
+		// if (mProfileImageMap.containsKey(userId)) {
+		// Log.d("ImageGetTask",
+		// "icon found in internal map: "
+		// + cursor.getString(cursor
+		// .getColumnIndex(StatusDbAdapter.KEY_SCREEN_NAME)));
+		// holder.getIcon().setImageDrawable(mProfileImageMap.get(userId));
+		// return view;
+		// } else {
+		// holder.getIcon().setImageDrawable(
+		// Drawable.createFromPath("res/drawable-mdpi/icon.png"));
+		// try {
+		// URL profileImageURL = new URL(cursor.getString(cursor
+		// .getColumnIndex(StatusDbAdapter.KEY_PROFILE_IMAGE_URL)));
+		// new ProfileImageGetTask().execute(context, userId,
+		// profileImageURL, view);
+		// } catch (MalformedURLException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		// }
+
+		new ProfileImageGetTask()
+				.execute(
+						cursor.getString(cursor
+								.getColumnIndex(StatusDbAdapter.KEY_PROFILE_IMAGE_URL)),
+						holder);
+
 		return view;
 	}
 
@@ -126,23 +130,16 @@ public class StatusCursorAdapter extends CursorAdapter {
 
 		@Override
 		protected Void doInBackground(Object... params) {
-			Context context = (Context) params[0];
-			long userId = ((Long) params[1]).longValue();
-			URL profileImageURL = (URL) params[2];
-			View view = (View) params[3];
-			Log.d("ImageGetTask",
-					"icon not found in internal map: fetch from db: ");
+			String profileImageUrl = (String) params[0];
+			StatusViewHolder holder = (StatusViewHolder) params[1];
 
-			ProfileImageDbAdapter imageDbAdapter = ProfileImageDbAdapter.getInstance(
-					);
-//			imageDbAdapter.open();
 			try {
-				Drawable drawable = imageDbAdapter.fetchProfileImage(context, userId,
-						profileImageURL);
-				mProfileImageMap.put(userId, drawable);
-				this.publishProgress(drawable, view);
+				Drawable profileImageDrawable = FlyweightProfileImageStore
+						.getInstance().getProfileImage(profileImageUrl);
+				// mProfileImageMap.put(userId, drawable);
+				this.publishProgress(holder, profileImageDrawable);
 			} finally {
-//				imageDbAdapter.close();
+				// imageDbAdapter.close();
 			}
 
 			return (Void) null;
@@ -152,8 +149,8 @@ public class StatusCursorAdapter extends CursorAdapter {
 		protected void onProgressUpdate(Object... values) {
 			// TODO Auto-generated method stub
 			super.onProgressUpdate(values);
-			StatusViewHolder holder = new StatusViewHolder((View) values[1]);
-			holder.getIcon().setImageDrawable((Drawable) values[0]);
+			StatusViewHolder holder = (StatusViewHolder) values[0];
+			holder.getIcon().setImageDrawable((Drawable) values[1]);
 			Log.d("ImageGetTask", "set icon done");
 		}
 	}

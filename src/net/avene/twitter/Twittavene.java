@@ -120,7 +120,9 @@ public class Twittavene extends ListActivity {
 	@Override
 	public void onPause() {
 		super.onPause();
+		stopManagingCursor(cursor);
 		cursor.close();
+		cursor = null;
 		unregisterReceiver(receiver);
 		// this.cursor.close();
 	}

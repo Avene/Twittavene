@@ -20,6 +20,8 @@ import android.widget.CursorAdapter;
 public class StatusCursorAdapter extends CursorAdapter {
 
 	private Map<String, Drawable> mProfileImageMap = new HashMap<String, Drawable>();
+	
+	
 
 	private StatusCursorAdapter(Context context, Cursor c) {
 		super(context, c);

@@ -70,7 +70,7 @@ public class StatusDbAdapter {
 	private static final String DATABASE_DROP = "DROP TABLE IF EXISTS statuses";
 	private static final String DATABASE_DELETE = "DELETE FROM statuses";
 	private static final String DATABASE_DELETE_OLD = "DELETE FROM statuses "
-			+ "WHERE _id < " + "((select max(_id) from statuses) - 10) ";
+			+ "WHERE _id < " + "((select max(_id) from statuses) - 50) ";
 
 	private final Context mCtx;
 
@@ -174,17 +174,6 @@ public class StatusDbAdapter {
 		return cursor;
 	}
 
-	/**
-	 * Return a Cursor over the list of all notes in the database
-	 * 
-	 * @return Cursor over all notes
-	 */
-	public Cursor fetchAllNotes(String[] columnNames) {
-		Cursor cursor = mDb.query(DATABASE_TABLE, columnNames, null, null,
-				null, null, null);
-		return cursor;
-	}
-
 	public long fetchStatusId(long rowId) throws SQLException {
 
 		Cursor mCursor = mDb.query(true, DATABASE_TABLE,
@@ -192,7 +181,9 @@ public class StatusDbAdapter {
 				null, null, null);
 		if (mCursor != null) {
 			mCursor.moveToFirst();
-			return mCursor.getLong(mCursor.getColumnIndex(KEY_ID));
+			long statusId = mCursor.getLong(mCursor.getColumnIndex(KEY_ID));
+			mCursor.close();
+			return statusId;
 		}
 		return (Long) null;
 
@@ -212,7 +203,9 @@ public class StatusDbAdapter {
 				System.out.println(s);
 				System.out.println(mCursor.getColumnCount());
 			}
-			return mCursor.getString(mCursor.getColumnIndex(KEY_SCREEN_NAME));
+			String screenName = mCursor.getString(mCursor.getColumnIndex(KEY_SCREEN_NAME));
+			mCursor.close();
+			return screenName;
 		}
 		return null;
 	}

@@ -23,15 +23,15 @@
 			</intent-filter>
 		</activity>
 		<activity
-			android:screenOrientation="unspecified"
+			android:screenOrientation="landscape"
 			android:name="net.avene.twitter.StatusUpdater"
 		></activity>
 		<activity
-			android:screenOrientation="unspecified"
+			android:screenOrientation="landscape"
 			android:name="net.avene.twitter.UserViewer"
 		></activity>
 		<activity
-			android:screenOrientation="unspecified"
+			android:screenOrientation="landscape"
 			android:name="net.avene.twitter.StatusViewer"
 		></activity>
 		<service

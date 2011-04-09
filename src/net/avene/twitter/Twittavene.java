@@ -53,6 +53,7 @@ public class Twittavene extends ListActivity {
 	public static final int ACTIVITY_REPLY = 1;
 	public static final String KEY_USER = "user";
 	public static final String KEY_QUOTED_TEXT = "quated_text";
+	public static final String KEY_ORIENTATION = "orientation";
 	private String screenName = "Avene_Avene";
 
 	static int onStatusCount = 0;
@@ -115,6 +116,7 @@ public class Twittavene extends ListActivity {
 		registerReceiver(receiver, new IntentFilter(
 				UserStreamService.BROADCAST_ACTION));
 		this.updateTL();
+		this.scrollToLatest();
 	}
 
 	@Override

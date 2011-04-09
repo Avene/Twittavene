@@ -76,7 +76,7 @@ public class StatusUpdater extends TwitterActivity {
 					});
 			break;
 		case -1:
-			throw new IllegalArgumentException("Status type is not selected.");
+			throw new IllegalArgumentException("Status type is undifined in passed intent");
 		default:
 			throw new IllegalArgumentException("Status type is illegal.");
 		}

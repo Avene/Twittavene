@@ -130,6 +130,11 @@ public class StatusDbAdapter {
 	}
 
 	public long insertStatus(Status status) {
+		String deleteQuery =  "DELETE FROM statuses "
+			+ "WHERE _id < " + "((select max(_id) from statuses) - 250) ";
+		mDb.execSQL(deleteQuery);
+		
+		
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(
 				KEY_CREATED_AT,

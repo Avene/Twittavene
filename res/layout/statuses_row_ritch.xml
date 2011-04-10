@@ -24,6 +24,7 @@
 		android:textColor="#99ccaa"
 		android:text="@string/message_loading"
 		android:padding="1dp"
+		android:maxWidth="160dp"
 		android:layout_toRightOf="@id/status_icon" />
 
 	<TextView

@@ -3,7 +3,6 @@ package net.avene.twitter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.Map;
 
 import net.avene.sqlite.StatusDbAdapter;
@@ -19,7 +18,7 @@ import android.widget.CursorAdapter;
 
 public class StatusCursorAdapter extends CursorAdapter {
 
-	private Map<String, Drawable> mProfileImageMap = new HashMap<String, Drawable>();
+	private Map<String, Drawable> mProfileImageMap = FlyweightProfileImageMap.getInstance();
 	
 	
 
@@ -79,15 +78,17 @@ public class StatusCursorAdapter extends CursorAdapter {
 	private class ProfileImageGetTask extends AsyncTask<Object, Object, Void> {
 
 		@Override
-		protected Void doInBackground(Object... params) {
+		protected synchronized Void doInBackground(Object... params) {
 			String profileImageUrl = (String) params[0];
 			StatusViewHolder holder = (StatusViewHolder) params[1];
 
 			try {
-				Drawable profileImageDrawable = Drawable.createFromStream(
-						new URL(profileImageUrl).openStream(), "");
-				mProfileImageMap.put(profileImageUrl, profileImageDrawable);
-				this.publishProgress(holder, profileImageDrawable);
+				if (!mProfileImageMap.containsKey(profileImageUrl)) {
+					Drawable profileImageDrawable = Drawable.createFromStream(
+							new URL(profileImageUrl).openStream(), "");
+					mProfileImageMap.put(profileImageUrl, profileImageDrawable);
+					this.publishProgress(holder, profileImageDrawable);
+				}
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
